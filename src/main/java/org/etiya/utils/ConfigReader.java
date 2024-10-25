@@ -8,10 +8,10 @@ import java.util.Properties;
 public class ConfigReader {
     private static Properties properties;
 
-    static {
+    public static void loadProperties(String fileName) {
+        properties = new Properties();
         try {
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream("src/main/java/org/etiya/resources/"+ fileName);
             properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
