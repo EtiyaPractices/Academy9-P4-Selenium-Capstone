@@ -1,38 +1,50 @@
 package org.etiya.tests;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.etiya.pages.Page1Login;
+import org.etiya.utils.ConfigReader;
+import org.etiya.utils.Driver;
+import org.etiya.utils.ScreenshotUtil;
+import org.etiya.utils.TestSetup;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.openqa.selenium.WebDriver;
 
-/**
- * Unit test for simple App.
- */
 public class Test1Login
-    extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public Test1Login(String testName )
-    {
-        super( testName );
+    private Page1Login loginPage;
+    private WebDriver driver;
+    String screenshotName;
+
+    @BeforeEach
+    public void setup(){
+        TestSetup.initialize();
+        driver = Driver.getDriver();
+        driver.get(ConfigReader.getProperty("config.properties", "url"));
+
+        loginPage = new Page1Login(driver);
+    }
+    @AfterEach
+    public void cleanup(){
+        ScreenshotUtil.takeScreenshot(screenshotName);
+        driver.quit();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( Test1Login.class );
+    @Test
+    public void testSuccessfulLogin() {
+        screenshotName = "testSuccessfulLogin";
+        String username = ConfigReader.getProperty("login.properties", "validUsername");
+        String password = ConfigReader.getProperty("login.properties", "validPassword");
+
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
+        loginPage.clickLoginButton();
+
+        String expectedUrl = ConfigReader.getProperty("login.properties", "expectedUrl");
+        String actualUrl = driver.getCurrentUrl();
+        String errorMsg = ConfigReader.getProperty("login.properties", "successLoginError");
+        assertEquals(expectedUrl, actualUrl, errorMsg);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
 }
