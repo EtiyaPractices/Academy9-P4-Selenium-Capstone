@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.time.Duration;
+
 public class Driver {
     private static WebDriver driver;
     private Driver(){}
@@ -26,6 +28,8 @@ public class Driver {
                 default:
                     throw new IllegalArgumentException("Unsupported browser: " + browser);
             }
+            // Using the IMPLICIT_WAIT constant
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Constants.IMPLICIT_WAIT));
         }
         return driver;
     }
