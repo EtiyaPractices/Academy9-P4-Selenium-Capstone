@@ -13,7 +13,7 @@ public class Driver {
     private Driver(){}
     public static WebDriver getDriver() {
         if (driver == null) {
-            String browser = ConfigReader.getProperty("browser");
+            String browser = ConfigReader.getProperty("config.properties", "browser");
             switch (browser.toLowerCase()){
                 case "chrome":
                     ChromeOptions chromeOptions = new ChromeOptions();
