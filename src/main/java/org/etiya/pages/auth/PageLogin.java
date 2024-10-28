@@ -1,4 +1,4 @@
-package org.etiya.pages;
+package org.etiya.pages.auth;
 
 import org.etiya.utils.ConfigReader;
 import org.etiya.utils.Constants;
@@ -11,16 +11,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class Page1Login {
+public class PageLogin {
     protected WebDriver driver;
     protected WebDriverWait wait;
     private final WebElement usernameField;
     private final WebElement passwordField;
     private final WebElement loginButton;
-    String usernameFieldId = ConfigReader.getProperty("login.properties", "usernameFieldId");
-    String passwordFieldId = ConfigReader.getProperty("login.properties", "passwordFieldId");
-    String loginButtonId = ConfigReader.getProperty("login.properties", "loginButtonId");
-    public Page1Login(WebDriver driver) {
+    String usernameFieldId = ConfigReader.getProperty("auth.properties", "usernameFieldId");
+    String passwordFieldId = ConfigReader.getProperty("auth.properties", "passwordFieldId");
+    String loginButtonId = ConfigReader.getProperty("auth.properties", "loginButtonId");
+    public PageLogin(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(Constants.EXPLICIT_WAIT));

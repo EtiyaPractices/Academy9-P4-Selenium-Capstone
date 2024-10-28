@@ -11,11 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ScreenshotUtil {
-    public static void takeScreenshot(String fileName){
+    public static void takeScreenshot(String folderName,String fileName){
         WebDriver driver = Driver.getDriver();
         File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String filePath = Constants.SCREENSHOTS_PATH + fileName +"-" + timestamp + ".png";
+        String filePath = Constants.SCREENSHOTS_PATH + folderName + "/" + fileName +"-" + timestamp + ".png";
 
         try{
             FileUtils.copyFile(srcFile, new File(filePath));
