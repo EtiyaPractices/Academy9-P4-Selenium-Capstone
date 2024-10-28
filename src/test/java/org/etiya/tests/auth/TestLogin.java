@@ -47,5 +47,4 @@ public class TestLogin
         String errorMsg = ConfigReader.getProperty("auth.properties", "successLoginError");
         assertEquals(expectedUrl, actualUrl, errorMsg);
     }
-
 }
