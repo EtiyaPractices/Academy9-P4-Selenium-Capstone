@@ -17,9 +17,13 @@ public class PageLogin {
     private final WebElement usernameField;
     private final WebElement passwordField;
     private final WebElement loginButton;
+
+    public WebElement errorContainer;
     String usernameFieldId = ConfigReader.getProperty("auth.properties", "usernameFieldId");
     String passwordFieldId = ConfigReader.getProperty("auth.properties", "passwordFieldId");
     String loginButtonId = ConfigReader.getProperty("auth.properties", "loginButtonId");
+
+    String errorMessageXPath=ConfigReader.getProperty("auth.properties","errorMessageXPath");
     public PageLogin(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -37,5 +41,10 @@ public class PageLogin {
     }
     public void clickLoginButton() {
         loginButton.click();
+    }
+
+    public void hoverErroMessage(){
+        errorContainer=wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(errorMessageXPath)));
+        errorContainer.click();
     }
 }
