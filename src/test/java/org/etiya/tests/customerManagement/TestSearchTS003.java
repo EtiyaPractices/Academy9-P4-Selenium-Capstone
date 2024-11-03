@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Objects;
+
 public class TestSearchTS003 {
     private WebDriver driver;
     private PageSearchTS003 customerSearchPage;
@@ -91,5 +93,16 @@ public class TestSearchTS003 {
         assertEquals(expectedMiddleName, customerSearchPage.getMiddleName(), "Middle Name does not match.");
         assertEquals(expectedLastName, customerSearchPage.getLastName(), "Last Name does not match.");
     }
-
+    @Test
+    public void testNoRecordFoundDisplaysErrorMessageTC007(){
+        screenshotName = "testNoRecordFoundDisplaysErrorMessageTC007";
+        customerSearchPage.enterNatID(ConfigReader.getProperty("customerManagement.properties", "enterNonExistentNatID"));
+        customerSearchPage.clickSearchButton();
+        customerSearchPage.findErrorMessage();
+        String expectedNoCustomerErrorMessage = ConfigReader.getProperty("customerManagement.properties", "expectedNoCustomerErrorMessage");
+        assertEquals(expectedNoCustomerErrorMessage, customerSearchPage.getErrorMessage(), "The error message does not match the expected text.");
+        assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("customerSearch"), "The user is not on the 'Customer Search' page.");
+        assertNotNull(customerSearchPage.createCustomerButton, "The 'Create New Customer' button is not displayed.");
+        assertTrue(customerSearchPage.createCustomerButton.isDisplayed(), "The 'Create New Customer' button is not visible on the page.");
+    }
 }

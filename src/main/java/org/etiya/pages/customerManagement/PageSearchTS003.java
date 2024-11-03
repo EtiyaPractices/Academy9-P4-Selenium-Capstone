@@ -31,6 +31,7 @@ public class PageSearchTS003 {
     public WebElement middleNameDisplay;
     public WebElement lastNameDisplay;
     public WebElement errorContainer;
+    public WebElement createCustomerButton;
 
     String customerIDFieldId = ConfigReader.getProperty("customerManagement.properties", "customerIDField");
     String natIDFieldId = ConfigReader.getProperty("customerManagement.properties", "natIDField");
@@ -50,6 +51,8 @@ public class PageSearchTS003 {
     String firstNameDisplayId = ConfigReader.getProperty("customerManagement.properties", "firstNameDisplay");
     String middleNameDisplayId = ConfigReader.getProperty("customerManagement.properties", "middleNameDisplay");
     String lastNameDisplayId = ConfigReader.getProperty("customerManagement.properties", "lastNameDisplay");
+
+    String createCustomerButtonId = ConfigReader.getProperty("customerManagement.properties", "createCustomerButton");
 
     public PageSearchTS003(WebDriver driver) {
         this.driver = driver;
@@ -106,5 +109,11 @@ public class PageSearchTS003 {
     }
     public void findErrorMessage(){
         errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(errorContainerFieldId)));
+    }
+    public String getErrorMessage() {
+        return errorContainer.getText();
+    }
+    public WebElement findCreateCustomerButton() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(createCustomerButtonId)));
     }
 }
