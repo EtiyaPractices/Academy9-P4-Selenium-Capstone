@@ -16,8 +16,8 @@ This project follows the Page Object Model (POM) architecture to separate page-s
 ### Key Directories and Files
 
 - `src/test/java/org.etiya/tests` - Contains test classes that execute various UI scenarios.
-- `src/main/java/org.etiya/pages` - Contains the Page Object classes.
-- `src/main/java/org.etiya/utils` - Contains the reusable code blocks (utility files) for Page Object Model .
-- `src/main/java/org.etiya/resources` - Stores properties files, which define URLs, HTML element locators, and naming conventions, allowing centralized management of these attributes.
-- `src/test/java/org.etiya/resources` - Stores screenshots of the runned tests.
+- `src/main/java/org.etiya/pages` - Contains Page Object classes, which represent the application’s pages and their elements.
+- `src/main/java/org.etiya/utils` - Contains reusable code blocks (utility files) that support the Page Object Model.
+- `src/main/java/org.etiya/resources` - Stores properties files that define URLs, HTML element locators, and naming conventions, centralizing the management of these attributes.
+- `src/test/java/org.etiya/resources` - Stores screenshots of executed tests for visual validation and troubleshooting.
 
