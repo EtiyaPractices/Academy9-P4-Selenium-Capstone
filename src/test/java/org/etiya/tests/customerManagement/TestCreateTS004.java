@@ -49,7 +49,7 @@ public class TestCreateTS004 {
     @Test
     public void testDuplicateNatIDErrorTC002(){
         screenshotName = "testDuplicateNatIDErrorTC002";
-        customerCreatePage.enterFirstName("John");
+        customerCreatePage.enterFirstName(ConfigReader.getProperty("customerManagement.properties", "cFirstNameInput"));
         customerCreatePage.enterLastName("Doe");
         customerCreatePage.enterNatID("12345678912");
         customerCreatePage.enterDateOfBirth("01-03-1998");
