@@ -50,14 +50,14 @@ public class TestCreateTS004 {
     public void testDuplicateNatIDErrorTC002(){
         screenshotName = "testDuplicateNatIDErrorTC002";
         customerCreatePage.enterFirstName(ConfigReader.getProperty("customerManagement.properties", "cFirstNameInput"));
-        customerCreatePage.enterLastName("Doe");
-        customerCreatePage.enterNatID("12345678912");
-        customerCreatePage.enterDateOfBirth("01-03-1998");
-        customerCreatePage.selectGender("1");
+        customerCreatePage.enterLastName(ConfigReader.getProperty("customerManagement.properties", "cLastNameInput"));
+        customerCreatePage.enterNatID(ConfigReader.getProperty("customerManagement.properties", "cNatIDInput"));
+        customerCreatePage.enterDateOfBirth(ConfigReader.getProperty("customerManagement.properties", "cDateOfBirthInput"));
+        customerCreatePage.selectGender(ConfigReader.getProperty("customerManagement.properties", "cGenderInput"));
 
         customerCreatePage.clickNextButton();
 
-        String expectedErrorMessage = "This customer already exists";
+        String expectedErrorMessage = ConfigReader.getProperty("customerManagement.properties", "cDuplicateNatIDErrorTC002");
         String actualMessage= customerCreatePage.errorContainer.getText();
         assertEquals(expectedErrorMessage, actualMessage, "Error message does not match expected text.");
         
