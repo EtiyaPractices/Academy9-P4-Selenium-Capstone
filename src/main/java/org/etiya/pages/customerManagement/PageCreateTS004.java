@@ -28,11 +28,11 @@ public class PageCreateTS004 {
     String firstNameFieldId = ConfigReader.getProperty("customerManagement.properties", "cFirstNameField");
     String middleNameFieldId = ConfigReader.getProperty("customerManagement.properties", "cMiddleNameField");
     String lastNameFieldId = ConfigReader.getProperty("customerManagement.properties", "cLastNameField");
-    String dateOfBirthFieldId = ConfigReader.getProperty("customerCreation.properties", "cDobFieldId");
-    String natIDFieldId = ConfigReader.getProperty("customerCreation.properties", "cNatIDFieldId");
-    String genderFieldId = ConfigReader.getProperty("customerCreation.properties", "cGenderFieldId");
-    String motherNameFieldId = ConfigReader.getProperty("customerCreation.properties", "cMotherNameFieldId");
-    String fatherNameFieldId = ConfigReader.getProperty("customerCreation.properties", "cFatherNameFieldId");
+    String dateOfBirthFieldId = ConfigReader.getProperty("customerManagement.properties", "cDobFieldId");
+    String natIDFieldId = ConfigReader.getProperty("customerManagement.properties", "cNatIDFieldId");
+    String genderFieldId = ConfigReader.getProperty("customerManagement.properties", "cGenderFieldId");
+    String motherNameFieldId = ConfigReader.getProperty("customerManagement.properties", "cMotherNameFieldId");
+    String fatherNameFieldId = ConfigReader.getProperty("customerManagement.properties", "cFatherNameFieldId");
     String errorContainerFieldId = ConfigReader.getProperty("customerManagement.properties", "createErrorContainer");
 
     public PageCreateTS004(WebDriver driver) {

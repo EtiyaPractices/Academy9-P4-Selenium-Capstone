@@ -19,6 +19,7 @@ public class TestSearchTS003 {
     private PageSearchTS003 customerSearchPage;
     String folderName = "customerSearch";
     String screenshotName;
+    String customerID;
 
     @BeforeEach
     public void setUp() {
@@ -92,6 +93,7 @@ public class TestSearchTS003 {
         assertEquals(expectedFirstName, customerSearchPage.getFirstName(), "First Name does not match.");
         assertEquals(expectedMiddleName, customerSearchPage.getMiddleName(), "Middle Name does not match.");
         assertEquals(expectedLastName, customerSearchPage.getLastName(), "Last Name does not match.");
+        customerID = customerSearchPage.getCustomerIDAfterSearch();
     }
     @Test
     public void testNoRecordFoundDisplaysErrorMessageTC007(){
@@ -105,4 +107,75 @@ public class TestSearchTS003 {
         assertNotNull(customerSearchPage.createCustomerButton, "The 'Create New Customer' button is not displayed.");
         assertTrue(customerSearchPage.createCustomerButton.isDisplayed(), "The 'Create New Customer' button is not visible on the page.");
     }
+    @Test
+    public void testValidationOfTheNumericFieldsTC008() {
+        screenshotName = "testValidationOfTheNumericFieldsTC008";
+        customerSearchPage.enterNatID(ConfigReader.getProperty("customerManagement.properties", "enterNonValidNatID"));
+        String expectedFieldDisplay = null;
+        assertEquals(expectedFieldDisplay, customerSearchPage.getNatID(),"Field is not empty.");
+    }
+
+    @Test
+    public void testTheNavigationAfterClickingTheCustomerIDLinkTC009() {
+        screenshotName = "testTheNavigationAfterClickingTheCustomerIDLinkTC009";
+        testSearchButtonFunctionalityDisplaysCustomerInformationTC006();
+        testTheNavigationAfterSeach(driver, customerID);
+
+    }
+
+    @Test
+    public void testTheValidationOfTheSizeLimitForMinTC010() {
+        screenshotName = "testTheValidationOfTheSizeLimitForMinTC010";
+        customerSearchPage.enterNatID(ConfigReader.getProperty("customerManagement.properties", "enterNonValidNatIDForMin"));
+        customerSearchPage.enterCustomerID(ConfigReader.getProperty("customerManagement.properties", "enterNonValidCustomerIDForMin"));
+        customerSearchPage.enterFirstName(ConfigReader.getProperty("customerManagement.properties", "enterNonValidFirstNameForMin"));
+        customerSearchPage.enterMiddleName(ConfigReader.getProperty("customerManagement.properties", "enterNonValidMiddleNameForMin"));
+        customerSearchPage.enterLastName(ConfigReader.getProperty("customerManagement.properties", "enterNonValidLastNameForMin"));
+        customerSearchPage.enterGsmNumber(ConfigReader.getProperty("customerManagement.properties", "enterNonValidGSMNumberForMin"));
+        customerSearchPage.enterAccountNumber(ConfigReader.getProperty("customerManagement.properties", "enterNonValidAccountNumberForMin"));
+        customerSearchPage.clickSearchButton();
+        customerSearchPage.findErrorMessage();
+        String actualResult = customerSearchPage.getErrorMessage();
+        assertEquals(generateValidationErrorMessage(customerSearchPage.getFieldLabelForCustomerID()), actualResult, "Messages are not matching."); //For customerID, should add other field's methods
+
+    }
+
+    public void testTheNavigationAfterSeach(WebDriver driver, String customerID) {
+        testSearchButtonFunctionalityDisplaysCustomerInformationTC006();
+        String currentURL = driver.getCurrentUrl();
+        assertEquals("https://www.saucedemo.com/"+customerID, currentURL,"URLs are not matching.");
+    }
+
+    public String generateValidationErrorMessage(String fieldName) {
+        String errorMessageFor10 = fieldName + "must be 10 characters.";
+        String errorMessageFor11 = fieldName + "must be 11 characters.";
+        String errorMessageFor2 = fieldName + "must be min 2 characters long.";
+        switch (fieldName) {
+            case "Nat ID":
+                return errorMessageFor11;
+            case "Customer ID":
+            case "Account Number":
+            case "GSM Number":
+                return errorMessageFor10;
+            case "First Name" :
+            case "Middle Name":
+            case "Last Name":
+                return errorMessageFor2;
+            default:
+                return "Field name was not found.";
+        }
+
+    }
+
+    @Test
+    public void testValidationOfFieldsForMaxTC011() {
+        screenshotName = "testValidationOfFieldsForMaxTC011";
+        customerSearchPage.enterNatID(ConfigReader.getProperty("customerManagement.properties", "enterNonValidNatID"));
+        String expectedFieldDisplay = null; //Here we should find a way to compare text size for max
+        assertEquals(expectedFieldDisplay, customerSearchPage.getNatID(),"Field is not empty.");
+    }
+
+
+
+
 }

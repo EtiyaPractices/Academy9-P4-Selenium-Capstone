@@ -32,6 +32,13 @@ public class PageSearchTS003 {
     public WebElement lastNameDisplay;
     public WebElement errorContainer;
     public WebElement createCustomerButton;
+    public WebElement fieldTitleCustomerID;
+    public WebElement fieldTitleNatID;
+    public WebElement fieldTitleAccountNumber;
+    public WebElement fieldTitleFirstName;
+    public WebElement fieldTitleLastName;
+    public WebElement fieldTitleMiddleName;
+    public WebElement fieldTitleGSMNumber;
 
     String customerIDFieldId = ConfigReader.getProperty("customerManagement.properties", "customerIDField");
     String natIDFieldId = ConfigReader.getProperty("customerManagement.properties", "natIDField");
@@ -53,6 +60,15 @@ public class PageSearchTS003 {
     String lastNameDisplayId = ConfigReader.getProperty("customerManagement.properties", "lastNameDisplay");
 
     String createCustomerButtonId = ConfigReader.getProperty("customerManagement.properties", "createCustomerButton");
+
+//    String fieldTitleIdCustomerID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdCustomerID");
+//    String fieldTitleIdNatID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdNatID");
+//    String fieldTitleIdAccountNumberID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdAccountNumberID");
+//    String fieldTitleIdGSMNumberID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdGSMNumberID");
+//    String fieldTitleIdFirstNameID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdFirstNameID");
+//    String fieldTitleIdMiddleNameID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdMiddleNameID");
+//    String fieldTitleIdLastNameID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdLastNameID");
+
 
     public PageSearchTS003(WebDriver driver) {
         this.driver = driver;
@@ -116,4 +132,38 @@ public class PageSearchTS003 {
     public WebElement findCreateCustomerButton() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(createCustomerButtonId)));
     }
+
+    public String getCustomerIDAfterSearch() {
+        return getCustomerID();
+    }
+
+    public String getFieldLabelForCustomerID() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleCustomerID.getAttribute("id") + "']"));
+        return label.getText();
+    }
+    public String getFieldLabelForNatID() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleNatID.getAttribute("id") + "']"));
+        return label.getText();
+    }
+    public String getFieldLabelForAccountNumber() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleAccountNumber.getAttribute("id") + "']"));
+        return label.getText();
+    }
+    public String getFieldLabelForFirstName() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleFirstName.getAttribute("id") + "']"));
+        return label.getText();
+    }
+    public String getFieldLabelForMiddleName() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleMiddleName.getAttribute("id") + "']"));
+        return label.getText();
+    }
+    public String getFieldLabelForLastName() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleLastName.getAttribute("id") + "']"));
+        return label.getText();
+    }
+    public String getFieldLabelForGSMNumber() {
+        WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleGSMNumber.getAttribute("id") + "']"));
+        return label.getText();
+    }
+
 }
