@@ -22,11 +22,11 @@ public class TestCreateTS004 {
     public void setUp() {
         TestSetup.initialize();
         driver = Driver.getDriver();
-        driver.get(ConfigReader.getProperty("config.properties", "url"));
-        PageLogin loginPage = new PageLogin(driver);
-        loginPage.enterUsername(ConfigReader.getProperty("auth.properties", "validUsername"));
-        loginPage.enterPassword(ConfigReader.getProperty("auth.properties", "validPassword"));
-        loginPage.clickLoginButton();
+        driver.get(ConfigReader.getProperty("config.properties", "customerCreateUrl"));
+//        PageLogin loginPage = new PageLogin(driver);
+//        loginPage.enterUsername(ConfigReader.getProperty("auth.properties", "validUsername"));
+//        loginPage.enterPassword(ConfigReader.getProperty("auth.properties", "validPassword"));
+//        loginPage.clickLoginButton();
         customerCreatePage = new PageCreateTS004(driver);
     }
     @AfterEach

@@ -81,8 +81,8 @@ public class PageSearchTS003 {
         firstNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(firstNameFieldId)));
         middleNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(middleNameFieldId)));
         lastNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(lastNameFieldId)));
-        searchButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(searchBtnId)));
-        clearButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(clearBtnId)));
+        searchButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(searchBtnId)));
+        clearButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(clearBtnId)));
     }
     public boolean isSearchButtonEnabled() { return searchButton.isEnabled(); }
     public boolean isClearButtonEnabled() { return clearButton.isEnabled(); }

@@ -25,11 +25,11 @@ public class TestSearchTS003 {
     public void setUp() {
         TestSetup.initialize();
         driver = Driver.getDriver();
-        driver.get(ConfigReader.getProperty("config.properties", "url"));
-        PageLogin loginPage = new PageLogin(driver);
-        loginPage.enterUsername(ConfigReader.getProperty("auth.properties", "validUsername"));
-        loginPage.enterPassword(ConfigReader.getProperty("auth.properties", "validPassword"));
-        loginPage.clickLoginButton();
+        driver.get(ConfigReader.getProperty("config.properties", "customerSearchUrl"));
+//        PageLogin loginPage = new PageLogin(driver);
+//        loginPage.enterUsername(ConfigReader.getProperty("auth.properties", "validUsername"));
+//        loginPage.enterPassword(ConfigReader.getProperty("auth.properties", "validPassword"));
+//        loginPage.clickLoginButton();
         customerSearchPage = new PageSearchTS003(driver);
     }
     @AfterEach
