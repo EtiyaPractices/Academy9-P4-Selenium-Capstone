@@ -96,7 +96,7 @@ public class PageSearchTS003 {
     public void clickSearchButton() { searchButton.click(); }
     public void clickClearButton() { clearButton.click(); }
     public String getCustomerID() {
-        customerIDDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(customerIDDisplayId)));
+        customerIDDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(customerIDDisplayId)));
         return customerIDDisplay.getText();
     }
     public String getNatID() {
@@ -164,6 +164,9 @@ public class PageSearchTS003 {
     public String getFieldLabelForGSMNumber() {
         WebElement label = driver.findElement(By.xpath("//label[@for='" + fieldTitleGSMNumber.getAttribute("id") + "']"));
         return label.getText();
+    }
+    public String getCustomerIDFieldValue() {
+        return customerIDField.getAttribute("value");
     }
 
 }
