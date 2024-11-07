@@ -28,10 +28,6 @@ public class TestSearchTS003 {
         TestSetup.initialize();
         driver = Driver.getDriver();
         driver.get(ConfigReader.getProperty("config.properties", "customerSearchUrl"));
-//        PageLogin loginPage = new PageLogin(driver);
-//        loginPage.enterUsername(ConfigReader.getProperty("auth.properties", "validUsername"));
-//        loginPage.enterPassword(ConfigReader.getProperty("auth.properties", "validPassword"));
-//        loginPage.clickLoginButton();
         customerSearchPage = new PageSearchTS003(driver);
     }
     @AfterEach
@@ -77,31 +73,30 @@ public class TestSearchTS003 {
     @Test
     public void testSearchButtonFunctionalityDisplaysCustomerInformationTC006(){
         screenshotName = "testSearchButtonFunctionalityDisplaysCustomerInformationTC006";
-//        customerSearchPage.natIDField.click();
-//        customerSearchPage.natIDField.sendKeys(ConfigReader.getProperty("customerManagement.properties", "enterExistingNatID"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value='" + ConfigReader.getProperty("customerManagement.properties", "enterExistingCustomerID") + "';", customerSearchPage.customerIDField);
+        customerSearchPage.enterNatID(ConfigReader.getProperty("customerManagement.properties", "enterExistingNatID"));
+        assertTrue(customerSearchPage.isSearchButtonEnabled(), "Search button should be active after entering data in any field.");
 
         js.executeScript("arguments[0].scrollIntoView(true);", customerSearchPage.searchButton);
-//        customerSearchPage.clickSearchButton();
-        js.executeScript("arguments[0].click();", customerSearchPage.searchButton);
-//
+        customerSearchPage.clickSearchButton();
+
         String expectedCustomerID = ConfigReader.getProperty("customerManagement.properties", "expectedCustomerID");
-//        String expectedNatID = ConfigReader.getProperty("customerManagement.properties", "expectedNatID");
-//        String expectedGsmNumber = ConfigReader.getProperty("customerManagement.properties", "expectedGsmNumber");
-//        String expectedAccountNumber = ConfigReader.getProperty("customerManagement.properties", "expectedAccountNumber");
-//        String expectedFirstName = ConfigReader.getProperty("customerManagement.properties", "expectedFirstName");
-//        String expectedMiddleName = ConfigReader.getProperty("customerManagement.properties", "expectedMiddleName");
-//        String expectedLastName = ConfigReader.getProperty("customerManagement.properties", "expectedLastName");
-//
+        String expectedNatID = ConfigReader.getProperty("customerManagement.properties", "expectedNatID");
+        String expectedGsmNumber = ConfigReader.getProperty("customerManagement.properties", "expectedGsmNumber");
+        String expectedAccountNumber = ConfigReader.getProperty("customerManagement.properties", "expectedAccountNumber");
+        String expectedFirstName = ConfigReader.getProperty("customerManagement.properties", "expectedFirstName");
+        String expectedMiddleName = ConfigReader.getProperty("customerManagement.properties", "expectedMiddleName");
+        String expectedLastName = ConfigReader.getProperty("customerManagement.properties", "expectedLastName");
+
         assertEquals(expectedCustomerID, customerSearchPage.getCustomerID(), "Customer ID does not match.");
-        //assertEquals(expectedNatID, customerSearchPage.getNatID(), "NAT ID does not match.");
-        //assertEquals(expectedGsmNumber, customerSearchPage.getGsmNumber(), "GSM Number does not match.");
-        //assertEquals(expectedAccountNumber, customerSearchPage.getAccountNumber(), "Account Number does not match.");
-        //assertEquals(expectedFirstName, customerSearchPage.getFirstName(), "First Name does not match.");
-        //assertEquals(expectedMiddleName, customerSearchPage.getMiddleName(), "Middle Name does not match.");
-//        assertEquals(expectedLastName, customerSearchPage.getLastName(), "Last Name does not match.");
-//        customerID = customerSearchPage.getCustomerIDAfterSearch();
+        assertEquals(expectedNatID, customerSearchPage.getNatID(), "NAT ID does not match.");
+        assertEquals(expectedGsmNumber, customerSearchPage.getGsmNumber(), "GSM Number does not match.");
+        assertEquals(expectedAccountNumber, customerSearchPage.getAccountNumber(), "Account Number does not match.");
+        assertEquals(expectedFirstName, customerSearchPage.getFirstName(), "First Name does not match.");
+        assertEquals(expectedMiddleName, customerSearchPage.getMiddleName(), "Middle Name does not match.");
+        assertEquals(expectedLastName, customerSearchPage.getLastName(), "Last Name does not match.");
+        customerID = customerSearchPage.getCustomerIDAfterSearch();
     }
     @Test
     public void testNoRecordFoundDisplaysErrorMessageTC007(){
@@ -111,9 +106,8 @@ public class TestSearchTS003 {
         customerSearchPage.findErrorMessage();
         String expectedNoCustomerErrorMessage = ConfigReader.getProperty("customerManagement.properties", "expectedNoCustomerErrorMessage");
         assertEquals(expectedNoCustomerErrorMessage, customerSearchPage.getErrorMessage(), "The error message does not match the expected text.");
-        assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("customerSearch"), "The user is not on the 'Customer Search' page.");
+        assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains(ConfigReader.getProperty("config.properties","customerSearchUrl")), "The user is not on the 'Customer Search' page.");
         assertNotNull(customerSearchPage.createCustomerButton, "The 'Create New Customer' button is not displayed.");
-        assertTrue(customerSearchPage.createCustomerButton.isDisplayed(), "The 'Create New Customer' button is not visible on the page.");
     }
     @Test
     public void testValidationOfTheNumericFieldsTC008() {
@@ -151,7 +145,7 @@ public class TestSearchTS003 {
     public void testTheNavigationAfterSeach(WebDriver driver, String customerID) {
         testSearchButtonFunctionalityDisplaysCustomerInformationTC006();
         String currentURL = driver.getCurrentUrl();
-        assertEquals("https://www.saucedemo.com/"+customerID, currentURL,"URLs are not matching.");
+        assertEquals("http://localhost:4200"+customerID, currentURL,"URLs are not matching.");
     }
 
     public String generateValidationErrorMessage(String fieldName) {

@@ -61,15 +61,6 @@ public class PageSearchTS003 {
 
     String createCustomerButtonId = ConfigReader.getProperty("customerManagement.properties", "createCustomerButton");
 
-//    String fieldTitleIdCustomerID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdCustomerID");
-//    String fieldTitleIdNatID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdNatID");
-//    String fieldTitleIdAccountNumberID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdAccountNumberID");
-//    String fieldTitleIdGSMNumberID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdGSMNumberID");
-//    String fieldTitleIdFirstNameID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdFirstNameID");
-//    String fieldTitleIdMiddleNameID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdMiddleNameID");
-//    String fieldTitleIdLastNameID = ConfigReader.getProperty("customerManagement.properties", "fieldTitleIdLastNameID");
-
-
     public PageSearchTS003(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -100,31 +91,31 @@ public class PageSearchTS003 {
         return customerIDDisplay.getText();
     }
     public String getNatID() {
-        natIDDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(natIDDisplayId)));
+        natIDDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(natIDDisplayId)));
         return natIDDisplay.getText();
     }
     public String getGsmNumber() {
-        gsmNumberDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(gsmNumberDisplayId)));
+        gsmNumberDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(gsmNumberDisplayId)));
         return gsmNumberDisplay.getText();
     }
     public String getAccountNumber() {
-        accountNumberDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(accountNumberDisplayId)));
+        accountNumberDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(accountNumberDisplayId)));
         return accountNumberDisplay.getText();
     }
     public String getFirstName() {
-        firstNameDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(firstNameDisplayId)));
+        firstNameDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(firstNameDisplayId)));
         return firstNameDisplay.getText();
     }
     public String getMiddleName() {
-        middleNameDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(middleNameDisplayId)));
+        middleNameDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(middleNameDisplayId)));
         return middleNameDisplay.getText();
     }
     public String getLastName() {
-        lastNameDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(lastNameDisplayId)));
+        lastNameDisplay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(lastNameDisplayId)));
         return lastNameDisplay.getText();
     }
     public void findErrorMessage(){
-        errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(errorContainerFieldId)));
+        errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(errorContainerFieldId)));
     }
     public String getErrorMessage() {
         return errorContainer.getText();
