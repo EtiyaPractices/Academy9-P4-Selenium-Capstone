@@ -1,0 +1,841 @@
+{
+	"info": {
+		"_postman_id": "01fd3e67-977a-4cc3-973b-d2fa32556375",
+		"name": "AcademyEtiyaP4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24412719",
+		"_collection_link": "https://pair40.postman.co/workspace/Academy9-P4~3a5e59e6-b853-4d39-8552-3a36149188cf/collection/39056227-01fd3e67-977a-4cc3-973b-d2fa32556375?action=share&source=collection_link&creator=24412719"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "customerService",
+					"item": [
+						{
+							"name": "search",
+							"item": [
+								{
+									"name": "individualCustomers",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "customersAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/customers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "contactAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/contact",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"contact"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "customerAccountsByCustomerId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/customer-accounts/customer/{customerId}",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customer-accounts",
+												"customer",
+												"{customerId}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "createIndividualCustomer",
+							"item": [
+								{
+									"name": "customerInfo",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"// Rastgele 20 karaktere kadar isim oluşturma fonksiyonu\r",
+													"function generateRandomName() {\r",
+													"    const characters = 'abcdefghijklmnopqrstuvwxyz';\r",
+													"    const firstCharacter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+													"    let name = firstCharacter.charAt(Math.floor(Math.random() * firstCharacter.length)); // İlk harfi büyük seçer\r",
+													"    const nameLength = Math.floor(Math.random() * 19) + 2; // 1 ile 19 arasında bir uzunluk belirler (toplamda 20 karakter olacak)\r",
+													"    for (let i = 0; i < nameLength; i++) {\r",
+													"        name += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+													"    }\r",
+													"    return name;\r",
+													"}\r",
+													"\r",
+													"function generateRandomDateOfBirth() {\r",
+													"    const startYear = 1950;\r",
+													"    const endYear = 2012;\r",
+													"    const year = Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;\r",
+													"    const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');\r",
+													"    const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0'); // Ay için 28 gün seçildi, böylece tüm aylarda geçerli olur\r",
+													"    const hour = String(Math.floor(Math.random() * 24)).padStart(2, '0');\r",
+													"    const minute = String(Math.floor(Math.random() * 60)).padStart(2, '0');\r",
+													"    const second = String(Math.floor(Math.random() * 60)).padStart(2, '0');\r",
+													"    const microsecond = String(Math.floor(Math.random() * 1000000)).padStart(6, '0'); // 0 ile 999999 arasında rastgele mikro saniye\r",
+													"    \r",
+													"    return `${year}-${month}-${day}T${hour}:${minute}:${second}.${microsecond}`;\r",
+													"}\r",
+													"\r",
+													"function generateRandomGender() {\r",
+													"    return Math.floor(Math.random() * 3) + 1; // 1, 2 veya 3 değerlerinden biri\r",
+													"}\r",
+													"\r",
+													"function generateRandomNationalityId() {\r",
+													"    let natId = '';\r",
+													"    for (let i = 0; i < 11; i++) {\r",
+													"        natId += Math.floor(Math.random() * 10); // 0-9 arasında rastgele bir sayı\r",
+													"    }\r",
+													"    return natId;\r",
+													"}\r",
+													"\r",
+													"// Rastgele isimler oluştur ve bunları değişkenlere ata\r",
+													"// pm.variables.set(\"firstName\", generateRandomName());\r",
+													"// pm.variables.set(\"middleName\", generateRandomName());\r",
+													"// pm.variables.set(\"lastName\", generateRandomName());\r",
+													"// pm.variables.set(\"motherName\", generateRandomName());\r",
+													"// pm.variables.set(\"fatherName\", generateRandomName());\r",
+													"pm.variables.set(\"dateOfBirth\", generateRandomDateOfBirth());\r",
+													"pm.variables.set(\"genderId\", generateRandomGender());\r",
+													"pm.variables.set(\"nationalityId\", generateRandomNationalityId());"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"nationalityId\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 200ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"nationalityId\": \"{{nationalityId}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"middleName\": \"{{middleName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"dateOfBirth\": \"{{dateOfBirth}}\",\r\n  \"motherName\": \"{{motherName}}\",\r\n  \"fatherName\": \"{{fatherName}}\",\r\n  \"genderId\": \"{{genderId}}\"\r\n}\r\n\r\n\r\n\r\n\r\n// {\r\n//   \"nationalityId\": \"{{nationalityId}}\",\r\n//   \"firstName\": \"a\",\r\n//   \"middleName\": \"b\",\r\n//   \"lastName\": \"c\",\r\n//   \"dateOfBirth\": \"{{dateOfBirth}}\",\r\n//   \"motherName\": \"d\",\r\n//   \"fatherName\": \"e\",\r\n//   \"genderId\": \"{{genderId}}\"\r\n// }\r\n\r\n// {\r\n//   \"nationalityId\": \"12345678901\",\r\n//   \"firstName\": \"aslı\",\r\n//   \"middleName\": \"ceren\",\r\n//   \"lastName\": \"baltık\",\r\n//   \"dateOfBirth\": \"{{dateOfBirth}}\",\r\n//   \"motherName\": \"deniz\",\r\n//   \"fatherName\": \"erdem\",\r\n//   \"genderId\": 1\r\n// }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "contactInfo",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"function generateRandomEmail() {\r",
+													"    const domains = [\"gmail.com\", \"yahoo.com\", \"outlook.com\", \"example.com\"];\r",
+													"    const username = Math.random().toString(36).substring(2, 10); // Rastgele kullanıcı adı\r",
+													"    const domain = domains[Math.floor(Math.random() * domains.length)];\r",
+													"    return `${username}@${domain}`;\r",
+													"}\r",
+													"\r",
+													"// Rastgele mobil telefon numarası oluşturma fonksiyonu (Türk numara formatı)\r",
+													"function generateRandomMobilePhone() {\r",
+													"    const prefix = \"05\"; // Türkiye için cep telefonu ön kodu\r",
+													"    const randomDigits = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');\r",
+													"    return `${prefix}${randomDigits}`;\r",
+													"}\r",
+													"\r",
+													"// Rastgele ev telefonu numarası oluşturma fonksiyonu (Türk numara formatı)\r",
+													"function generateRandomHomePhone() {\r",
+													"    const prefix = \"0212\"; // Türkiye için örnek sabit hat kodu\r",
+													"    const randomDigits = Math.floor(Math.random() * 10000000).toString().padStart(7, '0');\r",
+													"    return `${prefix}${randomDigits}`;\r",
+													"}\r",
+													"\r",
+													"// Rastgele faks numarası oluşturma fonksiyonu\r",
+													"function generateRandomFaxNumber() {\r",
+													"    const prefix = \"0312\"; // Türkiye için örnek faks numarası alan kodu\r",
+													"    const randomDigits = Math.floor(Math.random() * 10000000).toString().padStart(7, '0');\r",
+													"    return `${prefix}${randomDigits}`;\r",
+													"}\r",
+													"\r",
+													"// Değerleri Postman değişkenlerine kaydet\r",
+													"//pm.variables.set(\"email\", generateRandomEmail());\r",
+													"pm.variables.set(\"mobilePhone\", generateRandomMobilePhone());\r",
+													"pm.variables.set(\"homePhone\", generateRandomHomePhone());\r",
+													"pm.variables.set(\"faxNumber\", generateRandomFaxNumber());"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"customerId\": 4,\r\n    \"email\": \"abcd@abcd.com\",\r\n    \"mobilePhone\": \"{{mobilePhone}}\",\r\n    \"homePhone\": \"{{homePhone}}\",\r\n    \"faxNumber\": \"{{faxNumber}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/contact",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"contact"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addressInfo",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"// Rastgele açıklama (description) oluşturma fonksiyonu\r",
+													"function generateRandomDescription() {\r",
+													"    const descriptions = [\"Ev adresi\", \"İş adresi\", \"Tatildeki ev\", \"Aile evi\", \"Geçici adres\"];\r",
+													"    return descriptions[Math.floor(Math.random() * descriptions.length)];\r",
+													"}\r",
+													" \r",
+													"// Rastgele districtId oluşturma fonksiyonu (1-100 arası)\r",
+													"// function generateRandomDistrictId() {\r",
+													"//     return Math.floor(Math.random() * 100) + 1;\r",
+													"// }\r",
+													" \r",
+													"// Rastgele sokak adı (street) oluşturma fonksiyonu\r",
+													"function generateRandomStreet() {\r",
+													"    const streets = [\"Çınar Sokak\", \"Meşe Caddesi\", \"Gül Sokağı\", \"Yasemin Sokak\", \"Menekşe Caddesi\"];\r",
+													"    return streets[Math.floor(Math.random() * streets.length)];\r",
+													"}\r",
+													" \r",
+													"// Rastgele ev numarası (houseNumber) oluşturma fonksiyonu\r",
+													"function generateRandomHouseNumber() {\r",
+													"    return Math.floor(Math.random() * 100) + 1; // 1-100 arası rastgele ev numarası\r",
+													"}\r",
+													" \r",
+													"// Rastgele default değeri (true/false) oluşturma fonksiyonu\r",
+													"function generateRandomDefault() {\r",
+													"    return Math.random() < 0.5; // %50 olasılıkla true veya false döner\r",
+													"}\r",
+													" \r",
+													"function generate201Chars() {\r",
+													"    const characters = 'abcdefghijklmnopqrstuvwxyz';\r",
+													"    const firstCharacter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+													"    let name = firstCharacter.charAt(Math.floor(Math.random() * firstCharacter.length)); // İlk harfi büyük seçer\r",
+													"    const nameLength = 201; // 201 karakterli bir string oluşturmak için\r",
+													"    for (let i = 0; i < nameLength; i++) {\r",
+													"        name += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+													"    }\r",
+													"    return name;\r",
+													"}\r",
+													" \r",
+													"// Değerleri Postman değişkenlerine kaydet\r",
+													"pm.variables.set(\"description\", generateRandomDescription());\r",
+													"//pm.variables.set(\"districtId\", generateRandomDistrict());\r",
+													"// pm.variables.set(\"street\", generate201Chars());\r",
+													"pm.variables.set(\"street\", generateRandomStreet());\r",
+													"// pm.variables.set(\"houseNumber\", generate201Chars());\r",
+													"pm.variables.set(\"houseNumber\",generateRandomHouseNumber());\r",
+													"//pm.variables.set(\"default\", generateRandomDefault());\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"description\": \"{{description}}\",\r\n  \"customerId\": 17,\r\n  \"districtId\": \"1\",\r\n  \"street\": \"{{street}}\",\r\n  \"houseNumber\": \"{{houseNumber}}\",\r\n  \"default\": false\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/address",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"address"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "individual-customer-controller",
+							"item": [
+								{
+									"name": "individualCustomers",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "individualCustomers",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"customerId\": 30,\r\n  \"firstName\": \"kuzey\",\r\n  \"middleName\": \"Güney\",\r\n  \"lastName\": \"Tekinoğlu\",\r\n  \"dateOfBirth\": \"2024-11-02T13:24:53.527Z\",\r\n  \"motherName\": \"Handan\",\r\n  \"fatherName\": \"Sami\",\r\n  \"genderId\": 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{{customerURL}}/api/individualcustomers",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"customerId\": 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "individualcustomers/getById",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"customerId\": 4\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers/getById",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers",
+												"getById"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "customer-controller",
+							"item": [
+								{
+									"name": "customersById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/customers/{customerId}",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customers",
+												"{customerId}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "customersById",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"customerId\": 0,\r\n  \"addressIds\": [\r\n    0\r\n  ],\r\n  \"contactIds\": [\r\n    0\r\n  ],\r\n  \"customerAccountIds\": [\r\n    0\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/customers/{customerId}",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customers",
+												"{customerId}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "customers",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"addressIds\": [\r\n    0\r\n  ],\r\n  \"contactIds\": [\r\n    0\r\n  ],\r\n  \"customerAccountIds\": [\r\n    0\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/customers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "customersAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/customers",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "searchCustomers",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"customerId\": 14,\r\n  \"nationalityId\": null,\r\n  \"accountNumber\": null,\r\n  \"firstName\": null,\r\n  \"middleName\": null,\r\n  \"lastName\": null,\r\n  \"mobilePhone\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/individualcustomers/search",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"individualcustomers",
+												"search"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "customer-accounts-controller",
+							"item": [
+								{
+									"name": "customerAccounts",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/customer-accounts/getAll",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customer-accounts",
+												"getAll"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "customerAccountsByCustomerId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/customer-accounts/customer/{customerId}",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"customer-accounts",
+												"customer",
+												"{customerId}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "contact-controller",
+							"item": [
+								{
+									"name": "contactAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/contact",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"contact"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "contactById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{customerURL}}/api/contact/{contactId}",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"contact",
+												"{contactId}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "address-controller",
+							"item": [
+								{
+									"name": "address",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"addressId\": 1,\r\n  \"description\": \"Ev adresi\",\r\n  \"customerId\": 3,\r\n  \"districtId\": 1,\r\n  \"street\": \"Çınar Sokak\",\r\n  \"houseNumber\": \"8\",\r\n  \"default\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{customerURL}}/api/address",
+											"host": [
+												"{{customerURL}}"
+											],
+											"path": [
+												"api",
+												"address"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "productService",
+					"item": [
+						{
+							"name": "create",
+							"item": []
+						},
+						{
+							"name": "read",
+							"item": []
+						},
+						{
+							"name": "update",
+							"item": []
+						},
+						{
+							"name": "delete",
+							"item": []
+						}
+					]
+				},
+				{
+					"name": "orderService",
+					"item": [
+						{
+							"name": "create",
+							"item": []
+						},
+						{
+							"name": "read",
+							"item": []
+						},
+						{
+							"name": "update",
+							"item": []
+						},
+						{
+							"name": "delete",
+							"item": []
+						}
+					]
+				},
+				{
+					"name": "identityService",
+					"item": [
+						{
+							"name": "create",
+							"item": []
+						},
+						{
+							"name": "read",
+							"item": []
+						},
+						{
+							"name": "update",
+							"item": []
+						},
+						{
+							"name": "delete",
+							"item": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
