@@ -36,5 +36,5 @@ Update the properties files in `src/main/java/org.etiya/resources` with the corr
 
 
 ### Additional Notes
-Page Object Model (POM): The repository uses the POM design pattern to enable reuse of code by decoupling test logic from page elements.
-Reusable Locators: All locators are stored in properties files to simplify maintenance and improve reusability.
+- Page Object Model (POM): The repository uses the POM design pattern to enable reuse of code by decoupling test logic from page elements.
+- Reusable Locators: All locators are stored in properties files to simplify maintenance and improve reusability.
