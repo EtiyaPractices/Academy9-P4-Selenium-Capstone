@@ -4,10 +4,11 @@ This repository contains automated UI tests for our application, developed using
 
 ## Quick Links
 
-- **Main Development Repository:** [Dev Repo Link](https://github.com/etiya-9-pair4/telco-crm-pair4)
-- **Jira Board - Test Cases:** [Jira Link](insert_jira_link_here)
-- **Excel - Detailed Test Cases:** [Excel Link](insert_excel_link_here)
-- **Postman - API Test Collection:** [Postman Link](insert_postman_link_here)
+- **Main Development Repository:** [Development Repo Link](https://github.com/etiya-9-pair4/telco-crm-pair4)
+- **Excel - Detailed Test Cases:** [Test scenarios for CRM project.xlsx](https://github.com/user-attachments/files/17678404/Test.scenarios.for.CRM.project.xlsx)
+- **Postman - API Test Collection:** [AcademyEtiyaP4.postman_collection.json…](https://github.com/EtiyaPractices/Academy9-P4-Selenium-Capstone/blob/master/AcademyEtiyaP4.postman_collection.json)
+
+
 
 ## Project Structure
 
@@ -21,3 +22,19 @@ This project follows the Page Object Model (POM) architecture to separate page-s
 - `src/main/java/org.etiya/resources` - Stores properties files that define URLs, HTML element locators, and naming conventions, centralizing the management of these attributes.
 - `src/test/java/org.etiya/resources` - Stores screenshots of executed tests for visual validation and troubleshooting.
 
+### Setup and Installation
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/EtiyaPractices/Academy9-P4-Selenium-Capstone.git
+   cd Academy9-P4-Selenium-Capstone
+   ```
+
+2. Configure Properties
+
+Update the properties files in `src/main/java/org.etiya/resources` with the correct URLs and HTML element locators based on the environment.
+
+
+### Additional Notes
+Page Object Model (POM): The repository uses the POM design pattern to enable reuse of code by decoupling test logic from page elements.
+Reusable Locators: All locators are stored in properties files to simplify maintenance and improve reusability.
